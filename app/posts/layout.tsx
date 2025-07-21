@@ -1,5 +1,7 @@
-import "./globals.css";
+import "../globals.css";
 import { Inter } from "next/font/google";
+import {Header, Footer} from "../header_footer";
+
 
 export const metadata = {
   title: `InnoLab - Innovation Laboratory`,
@@ -12,6 +14,7 @@ const inter = Inter({
   display: "swap",
 });
 
+
 export default function RootLayout({
   children,
 }: {
@@ -21,7 +24,9 @@ export default function RootLayout({
     <html lang="en" className={inter.variable}>
       <body>
         <section className="min-h-screen">
-          {children}
+          <Header />
+          <main>{children}</main>
+          <Footer />
         </section>
       </body>
     </html>

@@ -25,21 +25,16 @@ type PageProps = {
 };
 
 const PostPage = async ({ params }: any) => {
-  const { post, morePosts } = await getPostAndMorePosts(params.slug, true);
+  const {slug} = await params;
+  const { post, morePosts } = await getPostAndMorePosts(slug, true);
 
   return (
-    <div className="container mx-auto px-5">
-      <h2 className="mb-20 mt-8 text-2xl font-bold leading-tight tracking-tight md:text-4xl md:tracking-tighter">
-        <Link href="/" className="hover:underline">
-          Блог
-        </Link>
-        .
-      </h2>
+    <div className="container mx-auto px-5 max-w-5xl">
       <article>
-        <h1 className="mb-12 text-center text-3xl font-bold leading-tight tracking-tighter md:text-left md:text-5xl md:leading-none lg:text-5xl">
+        <h1 className="mb-12 text-center text-3xl font-bold leading-tight tracking-tighter md:text-left md:text-4xl md:leading-none lg:text-4xl">
           {post.title}
         </h1>
-        <div className="hidden md:mb-12 md:block">
+        <div className="hidden md:mb-4 md:block">
           {post.author && (
             <Avatar name={post.author.name} picture={post.author.picture} />
           )}

@@ -9,7 +9,7 @@ const PostPage = async ({ params }: any) => {
   const morePosts = await getAllPosts( true);
 
   return (
-    <div className="container mx-auto px-5">
+    <div className="container mx-auto px-5 max-w-5xl">
 
       <MoreStories morePosts={morePosts} />
     </div>

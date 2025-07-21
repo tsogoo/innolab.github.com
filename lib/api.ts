@@ -27,14 +27,35 @@ const POST_GRAPHQL_FIELDS = `
     }
   }
 `;
+const POSTS_GRAPHQL_FIELDS = `
+  slug
+  title
+  coverImage {
+    url
+  }
+  date
+  author {
+    name
+    picture {
+      url
+    }
+  }
+  excerpt
+`;
 
 const PRODUCT_GRAPHQL_FIELDS = `
   slug
   title
+  imageCollection {
+    items {
+      url
+    }
+  }
   qpay
   date
   new
   price
+  originalPrice
   content {
     json
     links {
@@ -50,12 +71,32 @@ const PRODUCT_GRAPHQL_FIELDS = `
     }
   }
 `;
+const PRODUCTS_GRAPHQL_FIELDS = `
+  slug
+  title
+  imageCollection {
+    items {
+      url
+    }
+  }
+  qpay
+  date
+  new
+  price
+  originalPrice
+`;
 const COURSE_GRAPHQL_FIELDS = `
   slug
   title
+  imageCollection {
+    items {
+      url
+    }
+  }
   qpay
   date
   price
+  originalPrice
   content {
     json
     links {
@@ -70,6 +111,19 @@ const COURSE_GRAPHQL_FIELDS = `
       }
     }
   }
+`;
+const COURSES_GRAPHQL_FIELDS = `
+  slug
+  title
+  imageCollection {
+    items {
+      url
+    }
+  }
+  qpay
+  date
+  price
+  originalPrice
 `;
 
 async function fetchGraphQL(query: string, preview = false): Promise<any> {
@@ -134,7 +188,7 @@ export async function getAllPosts(isDraftMode: boolean): Promise<any[]> {
     `query {
       postCollection(where: { slug_exists: true }, order: date_DESC) {
         items {
-          ${POST_GRAPHQL_FIELDS}
+          ${POSTS_GRAPHQL_FIELDS}
         }
       }
     }`,
@@ -146,9 +200,9 @@ export async function getAllPosts(isDraftMode: boolean): Promise<any[]> {
 export async function getAllProducts(isDraftMode: boolean): Promise<any[]> {
   const entries = await fetchGraphQL(
     `query {
-      productCollection(where: { slug_exists: true }, order: date_DESC) {
+      productCollection(where: { slug_exists: true }, preview: false, order: date_DESC) {
         items {
-          ${PRODUCT_GRAPHQL_FIELDS}
+          ${PRODUCTS_GRAPHQL_FIELDS}
         }
       }
     }`,
@@ -163,7 +217,7 @@ export async function getAllCourses(isDraftMode: boolean): Promise<any[]> {
     `query {
       courseCollection(where: { slug_exists: true }, order: date_DESC) {
         items {
-          ${COURSE_GRAPHQL_FIELDS}
+          ${COURSES_GRAPHQL_FIELDS}
         }
       }
     }`,
@@ -195,7 +249,7 @@ export async function getPostAndMorePosts(
         preview ? "true" : "false"
       }, limit: 2) {
         items {
-          ${POST_GRAPHQL_FIELDS}
+          ${POSTS_GRAPHQL_FIELDS}
         }
       }
     }`,
@@ -227,9 +281,9 @@ export async function getProductAndMoreProducts(
     `query {
       productCollection(where: { slug_not_in: "${slug}" }, order: date_DESC, preview: ${
         preview ? "true" : "false"
-      }, limit: 2) {
+      }, limit: 10) {
         items {
-          ${PRODUCT_GRAPHQL_FIELDS}
+          ${PRODUCTS_GRAPHQL_FIELDS}
         }
       }
     }`,
@@ -262,9 +316,9 @@ export async function getCourseAndMoreCourses(
     `query {
       courseCollection(where: { slug_not_in: "${slug}" }, order: date_DESC, preview: ${
         preview ? "true" : "false"
-      }, limit: 2) {
+      }, limit: 10) {
         items {
-          ${COURSE_GRAPHQL_FIELDS}
+          ${COURSES_GRAPHQL_FIELDS}
         }
       }
     }`,

@@ -17,12 +17,13 @@ export async function generateStaticParams() {
 
 
 const CourcePage = async ({ params }: any) => {
-  const { course  } = await getCourseAndMoreCourses(params.slug, true);
+  const { slug } = await params;
+  const { course  } = await getCourseAndMoreCourses(slug, true);
 
   return (
-    <div className="container mx-auto px-5">
+    <div className="container mx-auto px-5 max-w-5xl">
       <article>
-        <h1 className="mb-12 text-center text-3xl font-bold leading-tight tracking-tighter md:text-left md:text-5xl md:leading-none lg:text-5xl">
+        <h1 className="mb-12 text-center text-3xl font-bold leading-tight tracking-tighter md:text-left md:text-4xl md:leading-none lg:text-4xl">
           {course.title}
         </h1>
         <Markdown content={course.content} />

@@ -1,84 +1,78 @@
 import Link from "next/link";
-import { draftMode } from "next/headers";
-
-import Date from "./date";
-import CoverImage from "./cover-image";
-import Avatar from "./avatar";
-import MoreStories from "./more-stories";
 
 import { getAllPosts, getPreviewPostBySlug } from "@/lib/api";
-import { CMS_NAME, CMS_URL } from "@/lib/constants";
+import { Facebook_URL, Youtube_URL } from "@/lib/constants";
 
-function Intro() {
-  return (
-    <section className="flex-col md:flex-row flex items-center md:justify-between mt-16 mb-16 md:mb-12">
-      <h1 className="text-4xl md:text-6xl font-bold tracking-tighter leading-tight md:pr-8">
-        Innovation Laboratory
-      </h1>
-      <h2 className="text-right md:text-right text-lg mt-5 md:pl-8">
-        Future Tech Skills Development
-      </h2>
-    </section>
-  );
-}
-
-function HeroPost({
-  title,
-  coverImage,
-  date,
-  excerpt,
-  author,
-  slug,
-}: {
-  title: string;
-  coverImage: any;
-  date: string;
-  excerpt: string;
-  author: any;
-  slug: string;
-}) {
-  return (
-    <section>
-      <div className="mb-8 md:mb-16">
-        <CoverImage title={title} slug={slug} url={coverImage.url} />
-      </div>
-      <div className="md:grid md:grid-cols-2 md:gap-x-16 lg:gap-x-8 mb-20 md:mb-28">
-        <div>
-          <h3 className="mb-4 text-4xl lg:text-6xl leading-tight">
-            <Link href={`/posts/${slug}`} className="hover:underline">
-              {title}
-            </Link>
-          </h3>
-          {/* <div className="mb-4 md:mb-0 text-lg">
-            <Date dateString={date} />
-          </div> */}
-        </div>
-        {/* <div>
-          <p className="text-lg leading-relaxed mb-4">{excerpt}</p>
-          {author && <Avatar name={author.name} picture={author.picture} />}
-        </div> */}
-      </div>
-    </section>
-  );
-}
 
 export default async function Page() {
   const heroPost = await getPreviewPostBySlug("hero-post");
   const morePosts = await getAllPosts(true);
   return (
-    <div className="container mx-auto px-5">
-      <Intro />
-      {heroPost && (
-        <HeroPost
-          title={heroPost.title}
-          coverImage={heroPost.coverImage}
-          date={heroPost.date}
-          author={heroPost.author}
-          slug={heroPost.slug}
-          excerpt={heroPost.excerpt}
-        />
-      )}
-      <MoreStories morePosts={morePosts} />
+    <div className="min-h-screen flex flex-col items-center justify-center px-5 text-center">
+      {/* <Intro /> */}
+
+      <div className="my-6">
+        <Link href="/home">
+          <img
+            src="/assets/innolab_logo.svg" // Make sure this path is correct and points to a valid image
+            alt="InnoLab Visit Site"
+            title="InnoLab Visit Site"
+            className="w-64 h-auto hover:opacity-80 transition-transform hover:scale-110"
+          />
+        </Link>
+        <nav className="block mt-4">
+          <ul className="flex space-x-4 text-center justify-center">
+            <li>
+              <a
+                href="/posts"
+                className="bg-white text-gray-700 border border-gray-300 rounded-full px-4 py-2 hover:bg-gray-100 hover:text-black transition"
+              >
+                Блог
+              </a>
+            </li>
+            <li>
+              <a
+                href="/courses"
+                className="bg-white text-gray-700 border border-gray-300 rounded-full px-4 py-2 hover:bg-gray-100 hover:text-black transition"
+              >
+                Сургалт
+              </a>
+            </li>
+            <li>
+              <a
+                href="/products"
+                className="bg-white text-gray-700 border border-gray-300 rounded-full px-4 py-2 hover:bg-gray-100 hover:text-black transition"
+              >
+                Дэлгүүр
+              </a>
+            </li>
+          </ul>
+        </nav>
+
+      </div>
+
+      <div className="flex space-x-6">
+        <a href={Facebook_URL} target="_blank" rel="noopener noreferrer">
+          <img
+            src="/assets/facebook.png" // Replace with actual Facebook icon
+            alt="InnoLab Facebook Page"
+            title="InnoLab Facebook Page"
+            className="w-20 h-20 hover:scale-110 transition-transform"
+          />
+        </a>
+        <a href={Youtube_URL} target="_blank" rel="noopener noreferrer">
+          <img
+            src="/assets/youtube.png" // Replace with actual YouTube icon
+            alt="InnoLab Youtube Channel"
+            title="InnoLab Youtube Channel"
+            className="w-20 h-20 hover:scale-110 transition-transform"
+          />
+        </a>
+      </div>
     </div>
+
   );
+}
+Page.getLayout = function getLayout(page:any) {
+  return page
 }

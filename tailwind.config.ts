@@ -12,6 +12,16 @@ export default {
       fontFamily: {
         sans: ["var(--font-inter)"],
       },
+      typography: {
+        DEFAULT: {
+          css: {
+            p: {
+              fontSize: "1rem",
+              lineHeight: "1.5rem", // optional
+            },
+          },
+        },
+      },
     },
   },
   future: {
